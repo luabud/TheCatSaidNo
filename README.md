@@ -17,6 +17,10 @@ This is a Useful Website written in Flask for demo purposes.
 
 
 ## Optional: Deploy to Azure with `azd`
+
+### Create an Azure account
+- If you don't have one, create an Azure account at https://azure.microsoft.com/free/. You'll start with USD 200 of credits when signing up for the first time. 
+    - Make sure you have contributor role to the Azure subscription when you create it.
 ### Install `azd`
 - Install the [Azure Developer CLI extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.azure-dev)
 - Open the Command Palette `Ctrl+Shift+P` / `Cmd+Shift+P`) and run the **Azure Developer: Install or Update Azure Developer CLI** command.
@@ -24,52 +28,268 @@ This is a Useful Website written in Flask for demo purposes.
     - If the command fails, first check if `azd` is installed but not on PATH. 
     - Otherwise try installing it manually by following the instructions at https://aka.ms/azd-install. 
 - Login Azure by running the **Azure Developer: Sign in with the Azure Developer CLI** command in the Command Palette. 
-- Initialize your application by running
+- Initialize your application by running the **Azure Developer: init** command, or running `azd init` in the terminal.
+    - Select **Empty Template**
+    - Provide an environment name (e.g. "thecatsaidno")
+    - Pick a region
+    - Provide an Azure subscription
+- When `azd init` is complete, you will see a folder named **infra** has been created at the root of your project folder.
+- Under the **infra** folder, create the following files:
+    - `abbreviations.json`:
+        <details> <summary> File content </summary> 
 
+        ```
+        {
+            "analysisServicesServers": "as",
+            "apiManagementService": "apim-",
+            "appConfigurationConfigurationStores": "appcs-",
+            "appManagedEnvironments": "cae-",
+            "appContainerApps": "ca-",
+            "authorizationPolicyDefinitions": "policy-",
+            "automationAutomationAccounts": "aa-",
+            "blueprintBlueprints": "bp-",
+            "blueprintBlueprintsArtifacts": "bpa-",
+            "cacheRedis": "redis-",
+            "cdnProfiles": "cdnp-",
+            "cdnProfilesEndpoints": "cdne-",
+            "cognitiveServicesAccounts": "cog-",
+            "cognitiveServicesFormRecognizer": "cog-fr-",
+            "cognitiveServicesTextAnalytics": "cog-ta-",
+            "computeAvailabilitySets": "avail-",
+            "computeCloudServices": "cld-",
+            "computeDiskEncryptionSets": "des",
+            "computeDisks": "disk",
+            "computeDisksOs": "osdisk",
+            "computeGalleries": "gal",
+            "computeSnapshots": "snap-",
+            "computeVirtualMachines": "vm",
+            "computeVirtualMachineScaleSets": "vmss-",
+            "containerInstanceContainerGroups": "ci",
+            "containerRegistryRegistries": "cr",
+            "containerServiceManagedClusters": "aks-",
+            "databricksWorkspaces": "dbw-",
+            "dataFactoryFactories": "adf-",
+            "dataLakeAnalyticsAccounts": "dla",
+            "dataLakeStoreAccounts": "dls",
+            "dataMigrationServices": "dms-",
+            "dBforMySQLServers": "mysql-",
+            "dBforPostgreSQLServers": "psql-",
+            "devicesIotHubs": "iot-",
+            "devicesProvisioningServices": "provs-",
+            "devicesProvisioningServicesCertificates": "pcert-",
+            "documentDBDatabaseAccounts": "cosmos-",
+            "eventGridDomains": "evgd-",
+            "eventGridDomainsTopics": "evgt-",
+            "eventGridEventSubscriptions": "evgs-",
+            "eventHubNamespaces": "evhns-",
+            "eventHubNamespacesEventHubs": "evh-",
+            "hdInsightClustersHadoop": "hadoop-",
+            "hdInsightClustersHbase": "hbase-",
+            "hdInsightClustersKafka": "kafka-",
+            "hdInsightClustersMl": "mls-",
+            "hdInsightClustersSpark": "spark-",
+            "hdInsightClustersStorm": "storm-",
+            "hybridComputeMachines": "arcs-",
+            "insightsActionGroups": "ag-",
+            "insightsComponents": "appi-",
+            "keyVaultVaults": "kv-",
+            "kubernetesConnectedClusters": "arck",
+            "kustoClusters": "dec",
+            "kustoClustersDatabases": "dedb",
+            "logicIntegrationAccounts": "ia-",
+            "logicWorkflows": "logic-",
+            "machineLearningServicesWorkspaces": "mlw-",
+            "managedIdentityUserAssignedIdentities": "id-",
+            "managementManagementGroups": "mg-",
+            "migrateAssessmentProjects": "migr-",
+            "networkApplicationGateways": "agw-",
+            "networkApplicationSecurityGroups": "asg-",
+            "networkAzureFirewalls": "afw-",
+            "networkBastionHosts": "bas-",
+            "networkConnections": "con-",
+            "networkDnsZones": "dnsz-",
+            "networkExpressRouteCircuits": "erc-",
+            "networkFirewallPolicies": "afwp-",
+            "networkFirewallPoliciesWebApplication": "waf",
+            "networkFirewallPoliciesRuleGroups": "wafrg",
+            "networkFrontDoors": "fd-",
+            "networkFrontdoorWebApplicationFirewallPolicies": "fdfp-",
+            "networkLoadBalancersExternal": "lbe-",
+            "networkLoadBalancersInternal": "lbi-",
+            "networkLoadBalancersInboundNatRules": "rule-",
+            "networkLocalNetworkGateways": "lgw-",
+            "networkNatGateways": "ng-",
+            "networkNetworkInterfaces": "nic-",
+            "networkNetworkSecurityGroups": "nsg-",
+            "networkNetworkSecurityGroupsSecurityRules": "nsgsr-",
+            "networkNetworkWatchers": "nw-",
+            "networkPrivateDnsZones": "pdnsz-",
+            "networkPrivateLinkServices": "pl-",
+            "networkPublicIPAddresses": "pip-",
+            "networkPublicIPPrefixes": "ippre-",
+            "networkRouteFilters": "rf-",
+            "networkRouteTables": "rt-",
+            "networkRouteTablesRoutes": "udr-",
+            "networkTrafficManagerProfiles": "traf-",
+            "networkVirtualNetworkGateways": "vgw-",
+            "networkVirtualNetworks": "vnet-",
+            "networkVirtualNetworksSubnets": "snet-",
+            "networkVirtualNetworksVirtualNetworkPeerings": "peer-",
+            "networkVirtualWans": "vwan-",
+            "networkVpnGateways": "vpng-",
+            "networkVpnGatewaysVpnConnections": "vcn-",
+            "networkVpnGatewaysVpnSites": "vst-",
+            "notificationHubsNamespaces": "ntfns-",
+            "notificationHubsNamespacesNotificationHubs": "ntf-",
+            "operationalInsightsWorkspaces": "log-",
+            "portalDashboards": "dash-",
+            "powerBIDedicatedCapacities": "pbi-",
+            "purviewAccounts": "pview-",
+            "recoveryServicesVaults": "rsv-",
+            "resourcesResourceGroups": "rg-",
+            "searchSearchServices": "srch-",
+            "serviceBusNamespaces": "sb-",
+            "serviceBusNamespacesQueues": "sbq-",
+            "serviceBusNamespacesTopics": "sbt-",
+            "serviceEndPointPolicies": "se-",
+            "serviceFabricClusters": "sf-",
+            "signalRServiceSignalR": "sigr",
+            "sqlManagedInstances": "sqlmi-",
+            "sqlServers": "sql-",
+            "sqlServersDataWarehouse": "sqldw-",
+            "sqlServersDatabases": "sqldb-",
+            "sqlServersDatabasesStretch": "sqlstrdb-",
+            "storageStorageAccounts": "st",
+            "storageStorageAccountsVm": "stvm",
+            "storSimpleManagers": "ssimp",
+            "streamAnalyticsCluster": "asa-",
+            "synapseWorkspaces": "syn",
+            "synapseWorkspacesAnalyticsWorkspaces": "synw",
+            "synapseWorkspacesSqlPoolsDedicated": "syndp",
+            "synapseWorkspacesSqlPoolsSpark": "synsp",
+            "timeSeriesInsightsEnvironments": "tsi-",
+            "webServerFarms": "plan-",
+            "webSitesAppService": "app-",
+            "webSitesAppServiceEnvironment": "ase-",
+            "webSitesFunctions": "func-",
+            "webStaticSites": "stapp-"
+        }
+        ```
+        </details>
+    - `main.bicep`:
+        <details> <summary> File content </summary> 
 
-> NOTE: This may take a while to complete as it executes three commands: `azd init` (initializes environment), `azd provision` (provisions Azure resources), and `azd deploy` (deploys application code). You will see a progress indicator as it provisions and deploys your application.
+        ```
+        targetScope = 'subscription'
 
-When `azd up` is complete it will output the following URLs:
+        @minLength(1)
+        @maxLength(64)
+        @description('Name of the the environment which is used to generate a short unique hash used in all resources.')
+        param environmentName string
 
-- Azure Portal link to view resources
-- ToDo Web application frontend
-- ToDo API application
+        @minLength(1)
+        @description('Primary location for all resources')
+        param location string
 
-!["azd up output"](assets/urls.png)
+        // Optional parameters to override the default azd resource naming conventions. Update the main.parameters.json file to provide values. e.g.,:
+        // "resourceGroupName": {
+        //      "value": "myGroupName"
+        // }
+        param appServicePlanName string = ''
+        param resourceGroupName string = ''
+        param webServiceName string = ''
+        // serviceName is used as value for the tag (azd-service-name) azd uses to identify
+        param serviceName string = 'web'
 
-Click the web application URL to launch the ToDo app. Create a new collection and add some items. This will create monitoring activity in the application that you will be able to see later when you run `azd monitor`.
+        @description('Id of the user or app to assign application roles')
+        param principalId string = ''
+
+        var abbrs = loadJsonContent('./abbreviations.json')
+        var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
+        var tags = { 'azd-env-name': environmentName }
+
+        // Organize resources in a resource group
+        resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+        name: !empty(resourceGroupName) ? resourceGroupName : '${abbrs.resourcesResourceGroups}${environmentName}'
+        location: location
+        tags: tags
+        }
+
+        // The application frontend
+        module web './core/host/appservice.bicep' = {
+        name: serviceName
+        scope: rg
+        params: {
+            name: !empty(webServiceName) ? webServiceName : '${abbrs.webSitesAppService}web-${resourceToken}'
+            location: location
+            tags: union(tags, { 'azd-service-name': serviceName })
+            appServicePlanId: appServicePlan.outputs.id
+            runtimeName: 'python'
+            runtimeVersion: '3.8'
+            scmDoBuildDuringDeployment: true
+        }
+        }
+
+        // Create an App Service Plan to group applications under the same payment plan and SKU
+        module appServicePlan './core/host/appserviceplan.bicep' = {
+        name: 'appserviceplan'
+        scope: rg
+        params: {
+            name: !empty(appServicePlanName) ? appServicePlanName : '${abbrs.webServerFarms}${resourceToken}'
+            location: location
+            tags: tags
+            sku: {
+            name: 'B1'
+            }
+        }
+        }
+
+        // App outputs
+        output AZURE_LOCATION string = location
+        output AZURE_TENANT_ID string = tenant().tenantId
+        output REACT_APP_WEB_BASE_URL string = web.outputs.uri
+        ```
+        </details>
+    - `main.parameters.json`:
+        <details> <summary> File content </summary> 
+
+        ```
+        {
+            "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+            "contentVersion": "1.0.0.0",
+            "parameters": {
+                "environmentName": {
+                    "value": "${AZURE_ENV_NAME}"
+                },
+                "location": {
+                    "value": "${AZURE_LOCATION}"
+                },
+                "principalId": {
+                    "value": "${AZURE_PRINCIPAL_ID}"
+                },
+                "useAPIM": {
+                    "value": "${USE_APIM=false}"
+                }
+            }
+        }
+        ```
+        </details>
+- Open the `azure.yaml` file that was automatically created on `azd init`. 
+    - Provide **TheCatSaidNo** to the `name` field
+    - Provide **web** to `serviceName`. The important thing is to match what is under the `serviceName` field in the `main.bicep` file.
+    - Provide **.** under the `project` field to indicate the project root is the path to the application.
+    - The resulting file should look like this:
+        ```
+        name: TheCatSaidNo
+        services:
+        web:
+            project: .
+            language: py
+            host: appservice
+        ```
+        
+ - Deploy the app by running the **Azure Developer: Deploy** command, or by running `azd deploy` in the terminal. 
 
 > NOTE:
 >
-> - The `azd up` command will create Azure resources that will incur costs to your Azure subscription. You can clean up those resources manually via the Azure portal or with the `azd down` command.
-> - You can call `azd up` as many times as you like to both provision and deploy your solution, but you only need to provide the `--template` parameter the first time you call it to get the code locally. Subsequent `azd up` calls do not require the template parameter. If you do provide the parameter, all your local source code will be overwritten if you agree to overwrite when prompted.
-> - You can always create a new environment with `azd env new`.
-
-### Application Architecture
-
-This application utilizes the following Azure resources:
-
-- [**Azure App Services**](https://docs.microsoft.com/azure/app-service/) to host the Web frontend and API backend
-- [**Azure Cosmos DB API for MongoDB**](https://docs.microsoft.com/azure/cosmos-db/mongodb/mongodb-introduction) for storage
-- [**Azure Monitor**](https://docs.microsoft.com/azure/azure-monitor/) for monitoring and logging
-- [**Azure Key Vault**](https://docs.microsoft.com/azure/key-vault/) for securing secrets
-
-Here's a high level architecture diagram that illustrates these components. Notice that these are all contained within a single [resource group](https://docs.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal), that will be created for you when you create the resources.
-
-<img src="assets/resources.png" width="60%" alt="Application architecture diagram"/>
-
-> This template provisions resources to an Azure subscription that you will select upon provisioning them. Please refer to the [Pricing calculator for Microsoft Azure](https://azure.microsoft.com/pricing/calculator/) and, if needed, update the included Azure resource definitions found in `infra/main.bicep` to suit your needs.
-
-### Application Code
-
-The repo is structured to follow the [Azure Developer CLI](https://aka.ms/azure-dev/overview) conventions including:
-
-- **Source Code**: All application source code is located in the `src` folder.
-- **Infrastructure as Code**: All application "infrastructure as code" files are located in the `infra` folder.
-- **Azure Developer Configuration**: An `azure.yaml` file located in the root that ties the application source code to the Azure services defined in your "infrastructure as code" files.
-- **GitHub Actions**: A sample GitHub action file is located in the `.github/workflows` folder.
-- **VS Code Configuration**: All VS Code configuration to run and debug the application is located in the `.vscode` folder.
-
-### Azure Subscription
-
-This template will create infrastructure and deploy code to Azure. If you don't have an Azure Subscription, you can sign up for a [free account here](https://azure.microsoft.com/free/). Make sure you have contributor role to the Azure subscription.
+> - These commands will create Azure resources that will incur costs to your Azure subscription. You can clean up those resources manually via the Azure portal or with the `azd down` command.
