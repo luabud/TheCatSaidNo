@@ -14,3 +14,15 @@ This is a Useful Website written in Flask for demo purposes.
 - Open the Terminal in VS Code (**View** > **Terminal**) and run `flask run`; OR
 - Run it with the debugger by opening the Run and Debug view (`Ctrl+Shift+D` or `Cmd+Shift+D`) and selecting **Show all automatic debug configurations**. 
     - Select **Python** and then select **Python: Flask**  
+
+## Containarize your app 
+- Install and run [Docker](https://www.docker.com/)
+- Install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+- Run the **Dev Containers: Add Dev Container Configuration Files...** command 
+    - Select "Python 3"
+    - Select "3.11" version
+    - Select any other features you'd like to install, or skip by selecting "OK"
+- Open the `devcontainer.json` file and uncomment the line with the `postCreateCommand` field, so the requirements can be installed after the container is created
+- Click on the "Reopen in Container" button from the notification displayed by VS Code once the container configuration files were created, or run the **Dev Containers: Open Folder in Container...**. 
+- Wait for container to be created and set up
+- You're ready to develop your app in the dev container!
