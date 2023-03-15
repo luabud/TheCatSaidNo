@@ -17,6 +17,7 @@ param location string
 param appServicePlanName string = ''
 param resourceGroupName string = ''
 param webServiceName string = ''
+param serviceName string = 'web'
 
 
 var abbrs = loadJsonContent('./abbreviations.json')
@@ -31,17 +32,19 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 }
 
 // The application frontend
-module web './app/web.bicep' = {
-  name: 'web'
+module web './core/host/appservice.bicep' = {
+  name: serviceName
   scope: rg
   params: {
     name: !empty(webServiceName) ? webServiceName : '${abbrs.webSitesAppService}web-${resourceToken}'
     location: location
-    tags: tags
+    tags: union(tags, { 'azd-service-name': serviceName })
     appServicePlanId: appServicePlan.outputs.id
+    runtimeName: 'python'
+    runtimeVersion: '3.8'
+    scmDoBuildDuringDeployment: true
   }
 }
-
 
 
 // Create an App Service Plan to group applications under the same payment plan and SKU
@@ -62,4 +65,4 @@ module appServicePlan './core/host/appserviceplan.bicep' = {
 // App outputs
 output AZURE_LOCATION string = location
 output AZURE_TENANT_ID string = tenant().tenantId
-output REACT_APP_WEB_BASE_URL string = web.outputs.SERVICE_WEB_URI
+output REACT_APP_WEB_BASE_URL string = web.outputs.uri
