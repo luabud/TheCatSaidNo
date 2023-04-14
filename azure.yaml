@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
 
-name: pycascades23-website
+name: thecatsaidno-website
 metadata:
-  template: pycascades23-website@0.0.1-beta
+  template: thecatsaidno-website@0.0.1-beta
 services:
   web:
     project: .
