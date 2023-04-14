@@ -7,4 +7,4 @@ import pytest
 @pytest.fixture
 def create_client():
     with app.test_client() as client:
-        return client
+        yield client
